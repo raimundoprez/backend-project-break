@@ -1,14 +1,11 @@
 const {validCategories} = require("../models/Product.js");
 
-const allProductsName = "Productos";
-const allProductsURL = "/products";
-
 function renderCategories(categories) {
-    const allProductsCategory = `<li><a href="${allProductsURL}">${allProductsName}</a></li>`;
+    const allProductsCategory = `<li><a href="${process.env.PRODUCTS_URL}">${process.env.PRODUCTS_NAME}</a></li>`;
 
     categories = categories.map(category => {
         const params = new URLSearchParams({category});
-        const url = allProductsURL + "?" + params.toString();
+        const url = process.env.PRODUCTS_URL + "?" + params.toString();
         
         return `<li><a href="${url}">${category}</a></li>`;
     });
