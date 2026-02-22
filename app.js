@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("node:path");
+const swaggerUI = require("swagger-ui-express");
 
 const methodOverride = require("method-override");
 const session = require("express-session");
@@ -8,6 +9,8 @@ const session = require("express-session");
 const productRoutes = require("./routes/productRoutes.js");
 const authRoutes = require("./routes/authRoutes.js");
 const apiRoutes = require("./routes/apiRoutes.js");
+
+const docs = require("./docs");
 
 const dbConnect = require("./config/db.js");
 
@@ -51,5 +54,8 @@ app.use(process.env.AUTH_URL, authRoutes);
 
 //rutas de la API
 app.use(process.env.API_URL, apiRoutes);
+
+//rutas de la documentación
+app.use(process.env.API_DOCS_URL, swaggerUI.serve, swaggerUI.setup(docs));
 
 module.exports = app;
