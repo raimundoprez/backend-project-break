@@ -1,5 +1,57 @@
 # Documentación
 
+## Cómo arrancar la aplicación
+
+- Instalar los paquetes necesarios con `npm install`.
+- Copiar un `.env` válido al mismo nivel del archivo `index.js`.
+- Utilizar una de estas dos ociones para arrancar el servidor:
+  - `npm run start`: Arranca la aplicación en modo normal.
+  - `npm run watch`: Arranca la aplicación con la opción de `--watch`.
+
+## Tecnologías utilizadas
+
+- `cors`: Para permitir el acceso desde dominios remotos.
+- `dotenv`: Para manejar variables de entorno.
+- `express-session`: Para manejar sesiones persistentes de manera automática.
+- `method-override`: Para permitir a los clientes enviar formularios con los métodos PUT y DELETE, de manera que puedan editar y borrar productos fácilmente.
+- `mongoose`: Como interfaz para conectar a una base de datos Mongo Atlas.
+- `swagger-ui-express`: Librería utilizada para documentar la API.
+
+## Endpoints disponibles
+
+Para usuarios estándar:
+- `GET /`: Redirige a `GET /products` por comodidad.
+- `GET /products`: Devuelve una vista con todos los productos de la página o, si pasamos `?category={category}`, filtra por categoría.
+- `GET /products/:productId`: Devuelve una vista de detalle de un producto por su ID.
+
+Para usuarios administrador:
+- `GET /dashboard`: Devuelve una vista similar a la devuelta con `GET /products`, pero solo para usuarios administrador.
+- `GET /dashboard/:productId`: Devuelve una vista similar a la devuelta con `GET /products/:productId`, pero solo para usuarios administrador.
+- `GET /dashboard/new`: Devuelve un formulario para crear un producto.
+- `POST /dashboard`: Envía una solicitud para crear un producto y redirige a `GET /dashboard/:productId`.
+- `DELETE /dashboard/:productId/delete`: Envía una solicitud de borrado de producto y redirige a `GET /dashboard`.
+- `GET /dashboard/:productId/edit`: Devuelve un formulario para editar un producto.
+- `PUT /dashboard/:productId`: Envía una solicitud de actualización de producto y redirige a `GET /dashboard/:productId`.
+
+Para autentificación:
+- `GET /auth/login`: Devuelve un formulario de login como administrador.
+- `POST /auth/login`: Envía una solicitud de login y redirige a `GET /dashboard`.
+- `GET /auth/logout`: Envía una solicitud de logout y redirige a `GET /products`.
+
+Para la API CRUD con respuestas JSON:
+Acceder a `/api-docs` para visualizar la documentación creada con Swagger UI, donde se explica cada endpoint en detalle.
+
+## Funciones helper utilizadas
+
+- `baseHtml(title, headerContent, mainContent)`: Devuelve un documento HTML formateado con el `<title>` pasado como primer argumento y el contenido de `body->header` y `body->main` en los otros dos.
+- `getLoginForm(errorMessage)`: Devuelve un formulario de login con un texto opcional que he usado para indicar si se ha producido un error que ha producido una redirección al formulario (user/pass incorrectos, acceso no autorizado...).
+- `getNavBar(isDashboard)`: Genera una barra de navegación lista para escribir en el `header`. El primer argumento es un bool para generar una barra u otra dependiendo de si somos administradores.
+- `getProductsCards(products, isDashboard)`: Genera un array con paneles HTML en formato string a partir de un array de productos. El segundo argumento decide si el botón `ver` de los paneles redirige a la vista del dashboard o a la de productos.
+- `getProductDetail(product, isDashboard)`: Genera un panel HTML de detalle de un producto. Con el segundo argumento decidimos si añadir los botones editar y borrar o no.
+- `getProductForm(product)`: Esta función sirve para generar el formulario de creación o edición de producto. Si el argumento `product` no está definido, se genera la de creación, en caso contrario, se utilizan los atributos del producto como valores por defecto de los input del formulario y se genera un formulario de edición.
+- `getProductsList(title, cards)`: Genera una lista `<ul>` a la que añade los `cards` generados con `getProductsCards(products, isDashboard)`. El argumento `title` es la categoría a la que pertenecen los productos para utilizarla como `<h1>`.
+- `validateProductParams(name, description, image, category, size, price)`: Valida los atributos de producto que se le pasan como argumento y convierte `price` a número. Si la validación es exitosa, devuelve un objeto con todos los valores, en otro caso, no devuelve nada. Esta función se utiliza en los controladores de creación y edición de producto para validar los valores recibidos del usuario.
+
 ## Créditos
 
 Icono general de la pagina web obtenido de: <a href="https://www.flaticon.com/free-icons/tshirt" title="tshirt icons">Tshirt icons created by Good Ware - Flaticon</a>
