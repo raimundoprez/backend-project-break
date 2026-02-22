@@ -7,6 +7,15 @@ html {
     color: black;
 }
 
+button,
+input,
+textarea,
+select {
+    font-family: inherit;
+    font-size: inherit;
+    padding: 5px;
+}
+
 nav > ul {
     background-color: rgb(29, 29, 29);
     display: flex;
@@ -82,7 +91,7 @@ h1 {
 
 .product-detail {
     width: 400px;
-    height: 533px;
+    height: auto;
 }
 
 .product-detail > p:nth-child(odd) {
@@ -95,14 +104,58 @@ h1 {
     font-weight: bold;
 }
 
+.product-detail > form > button {
+    background-color: rgb(220, 0, 0);
+    color: white;
+    padding: 15px;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+}
+
+.login-error {
+    background-color: red;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.data-form {
+    display: grid;
+    grid-template-columns: 100px 300px;
+    gap: 10px;
+}
+
+.data-form label {
+    grid-column: 1;
+}
+
+.data-form input {
+    grid-column: 2;
+}
+
+.data-form button {
+    grid-column: 1 / -1;
+    width: 200px;
+    cursor: pointer;
+}
+
 @media (max-width: 480px) {
     .product-card {
         width: 200px;
-        height: 267px;
+        height: 300px;
     }
 
     .product-detail {
         width: 220px;
-        height: 350px;
+        height: auto;
+    }
+
+    .data-form {
+        grid-template-columns: 200px;
+    }
+
+    .data-form input {
+        grid-column: 1;
     }
 }
