@@ -18,6 +18,7 @@ function loginUser(req, res) {
     else {
         req.session.regenerate((err) => {
             if (err) {
+                console.error("Error creando una sesión de admin", err);
                 res.redirect(process.env.AUTH_URL + "/login?" + new URLSearchParams({error: "Error al crear la sesión de admin"}).toString());
             }
             else {
@@ -29,9 +30,15 @@ function loginUser(req, res) {
 }
 
 function logoutUser(req, res) {
-    req.session.destroy(() => {
-        res.clearCookie("connect.sid");
-        res.redirect(process.env.PRODUCTS_URL);
+    req.session.destroy((err) => {
+        if (err) {
+            console.error("Error cerrando sesión", err);
+            res.redirect(process.env.DASHBOARD_URL);
+        }
+        else {
+            res.clearCookie("connect.sid");
+            res.redirect(process.env.PRODUCTS_URL);
+        }
     });
 }
 

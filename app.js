@@ -7,6 +7,8 @@ const session = require("express-session");
 
 const productRoutes = require("./routes/productRoutes.js");
 const authRoutes = require("./routes/authRoutes.js");
+const apiRoutes = require("./routes/apiRoutes.js");
+
 const dbConnect = require("./config/db.js");
 
 //intentamos conectar a BBDD y, si falla la conexión, la excepción que se lanza aborta el programa
@@ -46,5 +48,8 @@ app.use("/", productRoutes);
 
 //rutas de autenticación
 app.use(process.env.AUTH_URL, authRoutes);
+
+//rutas de la API
+app.use(process.env.API_URL, apiRoutes);
 
 module.exports = app;
